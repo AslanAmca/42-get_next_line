@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*   By: aaslan <aaslan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 14:12:08 by aaslan            #+#    #+#             */
-/*   Updated: 2022/06/22 20:52:40 by aaslan           ###   ########.fr       */
+/*   Updated: 2022/06/23 15:05:27 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 31
+#  define BUFFER_SIZE 1
 # endif
 
 # include <unistd.h>
