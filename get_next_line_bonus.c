@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:19:59 by aaslan            #+#    #+#             */
-/*   Updated: 2022/06/25 01:39:21 by aaslan           ###   ########.fr       */
+/*   Updated: 2022/06/25 01:38:57 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_fill_string(char *string, int fd)
 {
@@ -20,7 +20,7 @@ char	*ft_fill_string(char *string, int fd)
 	buffer = ft_create_empty_string(BUFFER_SIZE + 1);
 	if (buffer == NULL)
 		return (NULL);
-	readed_byte = 61;
+	readed_byte = 1;
 	while (readed_byte != 0 && ft_has_line_feed(buffer) == 0)
 	{
 		readed_byte = read(fd, buffer, BUFFER_SIZE);
@@ -90,15 +90,15 @@ char	*ft_delete_first_line(char *string)
 
 char	*get_next_line(int fd)
 {
-	static char	*string;
+	static char	*string[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	string = ft_fill_string(string, fd);
-	if (string == NULL || string[0] == '\0')
+	string[fd] = ft_fill_string(string[fd], fd);
+	if (string[fd] == NULL || string[fd][0] == '\0')
 		return (NULL);
-	line = ft_get_first_line(string);
-	string = ft_delete_first_line(string);
+	line = ft_get_first_line(string[fd]);
+	string[fd] = ft_delete_first_line(string[fd]);
 	return (line);
 }
