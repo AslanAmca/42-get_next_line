@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*   By: aaslan <aaslan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:19:59 by aaslan            #+#    #+#             */
-/*   Updated: 2022/06/25 01:38:57 by aaslan           ###   ########.fr       */
+/*   Updated: 2022/06/29 14:33:11 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,20 @@ char	*ft_delete_first_line(char *string)
 
 char	*get_next_line(int fd)
 {
-	static char	*string[1024];
+	static char	*string[4096];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	string[fd] = ft_fill_string(string[fd], fd);
-	if (string[fd] == NULL || string[fd][0] == '\0')
+	if (string[fd] == NULL)
 		return (NULL);
+	if (string[fd][0] == '\0')
+	{
+		free(string[fd]);
+		string[fd] = NULL;
+		return (NULL);
+	}
 	line = ft_get_first_line(string[fd]);
 	string[fd] = ft_delete_first_line(string[fd]);
 	return (line);

@@ -3,12 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*   By: aaslan <aaslan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:19:59 by aaslan            #+#    #+#             */
-/*   Updated: 2022/06/25 01:39:21 by aaslan           ###   ########.fr       */
+/*   Updated: 2022/06/29 14:11:10 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// # ifndef BUFFER_SIZE
+// #  define BUFFER_SIZE 1
+// # endif
+
+// #include <unistd.h>
+// #include <stdlib.h>
+// #include <fcntl.h>
+// #include <stdio.h>
+
+// int	ft_strlen(char *s)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (*s != '\0')
+// 	{
+// 		i++;
+// 		s++;
+// 	}
+// 	return (i);
+// }
+
+// int	ft_has_line_feed(char *line)
+// {
+// 	while (*line != '\0')
+// 	{
+// 		if (*line == '\n')
+// 			return (1);
+// 		line++;
+// 	}
+// 	return (0);
+// }
+
+// char	*ft_create_empty_string(int size)
+// {
+// 	char	*string;
+
+// 	string = (char *)malloc(sizeof(char) * size);
+// 	if (string != NULL)
+// 		*string = '\0';
+// 	return (string);
+// }
+
+// char	*ft_add_buffer_to_string(char *string, char *buffer)
+// {
+// 	char	*new_str;
+// 	int		len;
+// 	int		i;
+
+// 	if (string == NULL)
+// 		string = ft_create_empty_string(1);
+// 	len = ft_strlen(string) + ft_strlen(buffer);
+// 	new_str = (char *)malloc(sizeof(char) * (len + 1));
+// 	if (new_str == NULL)
+// 		return (NULL);
+// 	i = 0;
+// 	while (string[i] != '\0')
+// 	{
+// 		new_str[i] = string[i];
+// 		i++;
+// 	}
+// 	while (*buffer != '\0')
+// 	{
+// 		new_str[i] = *buffer;
+// 		i++;
+// 		buffer++;
+// 	}
+// 	new_str[i] = '\0';
+// 	free(string);
+// 	return (new_str);
+// }
 
 #include "get_next_line.h"
 
@@ -96,9 +168,22 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	string = ft_fill_string(string, fd);
-	if (string == NULL || string[0] == '\0')
+	if (string == NULL)
 		return (NULL);
+	if (*string == '\0')
+	{
+		free(string);
+		string = NULL;
+		return (NULL);
+	}
 	line = ft_get_first_line(string);
 	string = ft_delete_first_line(string);
 	return (line);
 }
+
+// int main()
+// {
+// 	int fd = open("empty", O_RDONLY);
+// 	printf("%s",get_next_line(fd));
+// 	return 0;
+// }
